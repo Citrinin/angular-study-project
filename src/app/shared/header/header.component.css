@@ -1,0 +1,8 @@
+.navbar {
+    background: linear-gradient(to right, rgb(39, 166, 240), rgb(145, 62, 255));
+}
+
+input[type="text"],
+textarea {
+    background-color: rgba(232, 250, 255, 0.863);
+}
