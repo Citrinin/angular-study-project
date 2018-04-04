@@ -1,0 +1,6 @@
+.dropdown-list {
+    background-color: #fff;
+    margin: 0;
+    position: absolute;
+    z-index: 10;
+}

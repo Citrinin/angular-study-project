@@ -7,16 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  mainMenuItems = [
-    {
-      name: 'Mail',
-      link: '/mail'
-    },
-    {
-      name: 'Contacts',
-      link: '/contacts'
-    }
-  ];
+
   constructor() { }
 
   ngOnInit() {

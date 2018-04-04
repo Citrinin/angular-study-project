@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Mail } from '../@types/mail';
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 declare var gapi: any;
 const CLIENT_ID = '913050155802-1c0udrumjvkfs16pm7vq45qs9mmplv36.apps.googleusercontent.com';
@@ -56,6 +59,20 @@ export class GoogleService {
       }
     });
     return result;
+
+    // fromPromise(gapi.client.gmail.users.messages.list({
+    //   'userId': 'me'
+    // })).pipe(
+    //   map((r: any) => r.result.messages),
+    //   tap(e => console.log(e)),
+    //   switchMap((message: any) => fromPromise(
+    //     gapi.client.gmail.users.messages.get({
+    //       'userId': 'me',
+    //       'id': message.id
+    //     })
+    //   )
+    //   )
+    // ).subscribe(p => console.log(p));
   }
 
 
@@ -76,4 +93,54 @@ export class GoogleService {
       }
     );
   }
+
+  ////////////////////////////////////////////////////////////
+
+  // user: any = false;
+  // constructor(private router: Router) { }
+
+  // initClient() {
+  //   (Promise.resolve()).then(() => {
+  //   });
+  // }
+
+  // b64DecodeUnicode(str) {
+  //   return decodeURIComponent(atob(str).split('').map((c) => {
+  //     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  //   }).join(''));
+  // }
+
+
+  // getMailList(): Subject<Mail> {
+  //   const result = new Subject<Mail>();
+
+  //   Promise.resolve().then(_ => {
+  //     result.next({ from: 'Gregory', snippet: 'Gregory mail' });
+  //     result.next({ from: 'Anna', snippet: 'Anna mail' });
+  //     result.next({ from: 'Inga', snippet: 'Inga mail' });
+  //     result.next({ from: 'Catherine', snippet: 'Catherine mail' });
+  //   });
+
+  //   return result;
+  // }
+
+
+  // signIn() {
+  //   return Promise.resolve().then(
+  //     response => {
+  //       this.user = 'Katherine';
+  //       this.router.navigate(['/mail']);
+  //       return this.user;
+  //     }
+  //   );
+  // }
+
+  // signOut() {
+  //   return Promise.resolve().then(
+  //     _ => {
+  //       this.user = '';
+  //       this.router.navigate(['/']);
+  //     }
+  //   );
+  // }
 }

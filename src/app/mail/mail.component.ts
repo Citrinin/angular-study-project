@@ -17,15 +17,22 @@ export class MailComponent implements OnInit {
 
   mails: Mail[];
 
-  constructor(private googleService: GoogleService) { }
+  constructor(
+    private googleService: GoogleService
+  ) { }
 
   ngOnInit() {
+    this.getMail();
+  }
+
+  getMail() {
     this.mails = [];
     this.googleService.getMailList().subscribe(result => {
       // console.log(result);
       this.mails = [...this.mails, result];
       // console.log(this.mails);
     });
+    // this.googleService.getMailList();
   }
 
 }
