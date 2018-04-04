@@ -1,0 +1,8 @@
+<div class="dropdown">
+    <button #toggleButton (blur)="blur()" class="btn btn-secondary dropdown-toggle" (click)="toggle()">{{activeItem}}</button>
+
+
+    <div *ngIf="visible" class="dropdown-list">
+        <a class="dropdown-item" *ngFor="let item of mainMenuItems " [routerLink]="item.link" (click)="clickHandler(item) ">{{item.name}}</a>
+    </div>
+</div>
