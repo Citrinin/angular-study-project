@@ -1,15 +1,10 @@
-<app-toolbar></app-toolbar>
+<app-header></app-header>
 <div class="row mx-0 px-0">
 
     <app-menu [menuItems]="mailMenu" class="col-md-1"></app-menu>
 
-    <div class="col-md-11 content">
-        <h1>Mails</h1>
-
-        <p *ngFor="let mail of mails" class="mail-item m-2">
-            <b>{{mail.email}}</b> {{mail.name}}
-            <!-- <b>{{mail.}}</b> {{mail.snippet}} -->
-        </p>
-
+    <div class="col-md-11">
+        <router-outlet></router-outlet>
     </div>
+
 </div>

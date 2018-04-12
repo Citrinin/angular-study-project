@@ -17,6 +17,8 @@ import { MailService } from './services/mail.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { FormsModule } from '@angular/forms';
+import { MailListComponent } from './mail/mail-list/mail-list.component';
+import { MailItemComponent } from './mail/mail-item/mail-item.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { FormsModule } from '@angular/forms';
     ToolbarComponent,
     MainComponent,
     DropdownComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    MailListComponent,
+    MailItemComponent
   ],
   imports: [
     BrowserModule,

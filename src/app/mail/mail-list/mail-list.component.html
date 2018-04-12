@@ -1,0 +1,10 @@
+<app-toolbar></app-toolbar>
+<div>
+    <div class="content">
+        <p *ngFor="let mail of mails" class="mail-item m-1">
+            <a routerLink="/mail/item/{{mail.id}}">
+                <b>{{mail.email}}</b> {{mail.name}}
+            </a>
+        </p>
+    </div>
+</div>

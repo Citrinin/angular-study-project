@@ -1,0 +1,19 @@
+.row {
+    margin: 0;
+}
+
+.content {
+    overflow-y: scroll;
+    height: 80vh;
+}
+
+.mail-item {
+    background-color: rgba(255, 255, 255, 0.527);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

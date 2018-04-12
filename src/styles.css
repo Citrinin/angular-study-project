@@ -1,4 +1,5 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~font-awesome/css/font-awesome.css';
 body {
     background-image: url("assets/beautiful-winter-landscape-white-mountains-5120x2880.jpg");
     background-position: center;

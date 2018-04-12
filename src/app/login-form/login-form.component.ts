@@ -11,6 +11,7 @@ export class LoginFormComponent implements OnInit {
 
   public username: string;
   public password: string;
+  public loading = false;
   @ViewChild('fofoform') fofoform: NgForm;
 
   constructor(
@@ -22,13 +23,11 @@ export class LoginFormComponent implements OnInit {
 
   login() {
     console.log(this.username, ' ', this.password);
-    this.mailService.login(this.username);
+    this.loading = true;
+    this.mailService.login(this.username).subscribe(() => this.loading = false);
   }
 
   submit() {
     console.log(this.fofoform.value);
   }
-
-
-
 }
