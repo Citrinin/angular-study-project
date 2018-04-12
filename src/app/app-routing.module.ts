@@ -4,7 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { MailComponent } from './mail/mail.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
+import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { MainComponent } from './main/main.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,11 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent
+  },
+  {
+    path: 'login',
+    component: LoginFormComponent,
+    canActivate: [AnonymousGuard]
   },
 ];
 

@@ -6,11 +6,11 @@
         <input class="form-control col-md-6 offset-md-1" type="text" placeholder="Search" aria-label="Search">
         <div class="justify-content-end px-2" id="nav-content">
             <div class="navbar-nav flex-nowrap">
-                <button type="button" *ngIf="!isSignIn" class="btn btn-link" id="googleres" style="color:#fff" (click)="handleAuthClick()">Log in</button>
                 <div *ngIf="isSignIn">
                     <label>{{userName}}</label>
-                    <button type="button" class="btn btn-link" (click)="handleSignoutClick()" style="color:#fff">Log out</button>
+                    <button type="button" class="btn btn-link" (click)="signoutClick()" style="color:#fff">Log out</button>
                 </div>
+                <a *ngIf="!isSignIn" class="nav-link" routerLink="login">Login</a>
             </div>
         </div>
     </div>

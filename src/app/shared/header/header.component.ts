@@ -1,38 +1,32 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { GoogleService } from '../../services/google.service';
+import { Component, OnInit } from '@angular/core';
+import { MailService } from '../../services/mail.service';
+import { isNull } from 'util';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit {
 
-  constructor(private googleService: GoogleService) { }
+  constructor(
+    private mailService: MailService
+  ) { }
 
-  isSignIn = false;
-  userName: string;
+  public userName: string;
+  public isSignIn: boolean;
 
   ngOnInit() {
+    this.mailService.authChanged.subscribe(_ => this.checkAuth());
+    this.checkAuth();
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => this.googleService.initClient(), 1000);
+  signoutClick() {
+    this.mailService.logout();
   }
 
-  updateSigninStatus(isSignedIn) {
-    this.isSignIn = isSignedIn;
+  private checkAuth(): void {
+    this.userName = this.mailService.userName;
+    this.isSignIn = !isNull(this.userName);
   }
-
-  handleAuthClick() {
-    this.googleService.signIn().then(userName => this.userName = userName);
-    this.isSignIn = true;
-  }
-
-
-  handleSignoutClick() {
-    this.googleService.signOut();
-    this.isSignIn = false;
-  }
-
 }

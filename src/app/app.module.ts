@@ -9,10 +9,14 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { GoogleService } from './services/google.service';
 import { MainComponent } from './main/main.component';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
+import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
+import { MailService } from './services/mail.service';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,13 +27,17 @@ import { DropdownComponent } from './shared/dropdown/dropdown.component';
     ContactsComponent,
     ToolbarComponent,
     MainComponent,
-    DropdownComponent
+    DropdownComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+
   ],
-  providers: [GoogleService, AuthenticatedGuard],
+  providers: [AuthenticatedGuard, AnonymousGuard, MailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

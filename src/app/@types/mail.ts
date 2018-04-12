@@ -1,4 +1,7 @@
 export interface Mail {
-    from: string;
-    snippet: string;
+    postId: number;
+    id: number;
+    name: string;
+    email: string;
+    body: string;
 }

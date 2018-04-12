@@ -28,20 +28,13 @@ export class DropdownComponent implements OnInit {
   ngOnInit() {
   }
 
-  // blur() {
-  //   this.visible = false;
-  //   const blurObservable = fromEvent(this.toggleBtn, 'blur');
-  // }
-
   toggle(): void {
     this.visible = !this.visible;
-    console.log(this.toggleBtn);
   }
 
   clickHandler(item): void {
 
     this.activeItem = item.name;
-    console.log(this.activeItem);
     this.toggle();
   }
 

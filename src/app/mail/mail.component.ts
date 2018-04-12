@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GoogleService } from '../services/google.service';
+import { MailService } from '../services/mail.service';
 import { Mail } from '../@types/mail';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mail',
@@ -9,30 +10,27 @@ import { Mail } from '../@types/mail';
 })
 export class MailComponent implements OnInit {
 
-  mailMenu = [
+  public mailMenu = [
     { name: 'Inbox', link: '/mail' },
     { name: 'Sent Mail', link: '/mail' },
     { name: 'Draft', link: '/mail' },
   ];
 
-  mails: Mail[];
+  public mails: Mail[];
 
   constructor(
-    private googleService: GoogleService
+    private mailService: MailService
   ) { }
 
   ngOnInit() {
     this.getMail();
   }
 
-  getMail() {
-    this.mails = [];
-    this.googleService.getMailList().subscribe(result => {
-      // console.log(result);
-      this.mails = [...this.mails, result];
-      // console.log(this.mails);
-    });
-    // this.googleService.getMailList();
+  getMail(): void {
+    this.mailService.getMails()
+      .pipe(
+        tap(mails => this.mails = mails)
+      ).subscribe();
   }
 
 }

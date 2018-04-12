@@ -38,41 +38,43 @@ export class GoogleService {
   }
 
 
-  getMailList(): Subject<Mail> {
-    const result = new Subject<Mail>();
-    gapi.client.gmail.users.messages.list({
+  getMailList() {
+    // const result = new Subject<Mail>();
+    // gapi.client.gmail.users.messages.list({
+    //   'userId': 'me'
+    // }).then((response) => {
+    //   const messages = response.result.messages;
+    //   if (messages && messages.length > 0) {
+    //     messages.forEach(message => {
+    //       gapi.client.gmail.users.messages.get({
+    //         'userId': 'me',
+    //         'id': message.id
+    //       }).then(resp => {
+    //         const from = resp.result.payload.headers.find((item) =>
+    //           item.name === 'From'
+    //         ).value;
+    //         result.next({ from, snippet: resp.result.snippet });
+    //       });
+    //     });
+    //   }
+    // });
+    // return result;
+
+    fromPromise(gapi.client.gmail.users.messages.list({
       'userId': 'me'
-    }).then((response) => {
-      const messages = response.result.messages;
-      if (messages && messages.length > 0) {
-        messages.forEach(message => {
+    })).pipe(
+      tap(r => console.log(r)),
+      map((r: any) => r.result.messages),
+      switchMap(
+        (message: any) => message.map(m => fromPromise(
           gapi.client.gmail.users.messages.get({
             'userId': 'me',
-            'id': message.id
-          }).then(resp => {
-            const from = resp.result.payload.headers.find((item) =>
-              item.name === 'From'
-            ).value;
-            result.next({ from, snippet: resp.result.snippet });
-          });
-        });
-      }
-    });
-    return result;
-
-    // fromPromise(gapi.client.gmail.users.messages.list({
-    //   'userId': 'me'
-    // })).pipe(
-    //   map((r: any) => r.result.messages),
-    //   tap(e => console.log(e)),
-    //   switchMap((message: any) => fromPromise(
-    //     gapi.client.gmail.users.messages.get({
-    //       'userId': 'me',
-    //       'id': message.id
-    //     })
-    //   )
-    //   )
-    // ).subscribe(p => console.log(p));
+            'id': m.id
+          })
+        ))
+      ),
+      tap(e => console.log(e))
+    ).subscribe(p => console.log(p));
   }
 
 
