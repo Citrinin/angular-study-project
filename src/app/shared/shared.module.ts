@@ -14,9 +14,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule
-    // TestRoutingModule,
-    // ContactRoutingModule,
-    // MailRoutingModule
   ],
   declarations: [
     HeaderComponent,

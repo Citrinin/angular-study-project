@@ -8,7 +8,6 @@ const routes: Routes = [
   {
     path: '',
     component: ContactsComponent,
-    // canActivate: [AuthenticatedGuard],
     children: [{
       path: 'list',
       component: ContactsListComponent

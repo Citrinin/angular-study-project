@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: MailComponent,
-    // canActivate: [AuthenticatedGuard],
     children: [{
       path: 'list',
       component: MailListComponent
