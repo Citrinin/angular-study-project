@@ -15,11 +15,15 @@ export class DropdownComponent implements OnInit {
   mainMenuItems = [
     {
       name: 'Mail',
-      link: '/mail'
+      link: '/mail/list'
     },
     {
       name: 'Contacts',
       link: '/contacts'
+    },
+    {
+      name: 'Test',
+      link: '/test'
     }
   ];
 

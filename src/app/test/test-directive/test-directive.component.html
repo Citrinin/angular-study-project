@@ -1,0 +1,27 @@
+<div class="test">
+<h1>Attribute directives</h1>
+  <!--Если надо передать просто строку-->
+  <div appMyColorChange="red">Hello world</div>
+  <!--Если надо передать параметр-->
+  <div [appMyColorChange]="currentColor">Hello world</div>
+  <hr>
+
+  <div appMyColorChange="red" appMyRepeat message="Hello world 1" count="3"></div>
+  <hr>
+  <appMyRepeat appMyColorChange="blue" message="Hello world 2" count="5"></appMyRepeat>
+  <hr>
+  <p>
+    Форма редактирования учетной записи (пробрасывание в директиву)
+    <br>
+    <button [appMyConfirm]="onDelete">Удалить</button>
+  </p>
+  <hr>
+  <div appMyCoords style="background-color: deepskyblue; height: 200px; width: 200px;"></div>
+  <hr>
+  <p appClickableElement>
+    Click me
+  </p>
+  <div appClickableElement>
+    Click me
+  </div>
+</div>

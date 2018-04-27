@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { MailService } from '../../services/mail.service';
+import { UserService } from '../../services/user.service';
 
 
 @Injectable()
 export class AnonymousGuard implements CanActivate {
 
   constructor(
-    private mailService: MailService,
+    private userService: UserService,
     private router: Router
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.mailService.userName) {
+    if (!this.userService.userName) {
       return true;
     }
     this.router.navigate(['/mail']);

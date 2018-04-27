@@ -1,0 +1,21 @@
+<div class="test">
+  <h1>Structural directives</h1>
+  <p>Изменяют структуру DOM дерева. Используется со звездочкой</p>
+  <hr>
+  <button (click)="changeVisibility()">пиу!</button>
+  <div *appMyIf="visible">
+    ОЛОЛО
+  </div>
+  <hr>
+  <div *appMyDelay="1000">Element 1</div>
+  <div *appMyDelay="1500">Element 2</div>
+  <div *appMyDelay="2000">Element 3</div>
+  <div *appMyDelay="2500">Element 4</div>
+  <div *appMyDelay="3000">Element 5</div>
+  <div *appMyDelay="3500">Element 6</div>
+  <hr>
+<div *appUserCard="let fn = firstName; let ln = lastName">
+  <p><b>First Name:</b>{{fn}}</p>
+  <p><b>Last Name:</b>{{ln}}</p>
+</div>
+</div>

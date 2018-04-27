@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MailService } from '../../services/mail.service';
+import { UserService } from '../../services/user.service';
 import { isNull } from 'util';
 
 @Component({
@@ -10,23 +10,23 @@ import { isNull } from 'util';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private mailService: MailService
+    private userService: UserService
   ) { }
 
   public userName: string;
   public isSignIn: boolean;
 
   ngOnInit() {
-    this.mailService.authChanged.subscribe(_ => this.checkAuth());
+    this.userService.authChanged.subscribe(_ => this.checkAuth());
     this.checkAuth();
   }
 
   signoutClick() {
-    this.mailService.logout();
+    this.userService.logout();
   }
 
   private checkAuth(): void {
-    this.userName = this.mailService.userName;
+    this.userName = this.userService.userName;
     this.isSignIn = !isNull(this.userName);
   }
 }

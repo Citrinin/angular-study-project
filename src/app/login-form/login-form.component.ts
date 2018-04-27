@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MailService } from '../services/mail.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,22 +12,27 @@ export class LoginFormComponent implements OnInit {
   public username: string;
   public password: string;
   public loading = false;
-  @ViewChild('fofoform') fofoform: NgForm;
+
 
   constructor(
-    private mailService: MailService
+    private userService: UserService
   ) { }
+
+  public loginForm: FormGroup = new FormGroup({
+    'login': new FormControl('', [Validators.minLength(3)]),
+    'password': new FormControl('', [Validators.required, Validators.minLength(5)])
+  });
 
   ngOnInit() {
   }
 
-  login() {
+  public login() {
     console.log(this.username, ' ', this.password);
     this.loading = true;
-    this.mailService.login(this.username).subscribe(() => this.loading = false);
+    this.userService.login(this.loginForm.value.login).subscribe(() => this.loading = false);
   }
 
-  submit() {
-    console.log(this.fofoform.value);
+  public submit() {
+    console.log(this.loginForm.value.login);
   }
 }
