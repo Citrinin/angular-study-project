@@ -35,7 +35,7 @@ import { TestRoutingModule } from './test-routing.module';
     ClickableElementDirective,
     TestDirectiveComponent,
     TestStructuralDirectiveComponent,
-    TestComponent,
+    TestComponent
   ]
 })
 export class TestModule { }

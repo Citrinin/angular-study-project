@@ -8,13 +8,15 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { TestRoutingModule } from '../test/test-routing.module';
 import { ContactRoutingModule } from '../contact/contact-routing.module';
 import { MailRoutingModule } from '../mail/mail-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
-    TestRoutingModule,
-    ContactRoutingModule,
-    MailRoutingModule
+    RouterModule
+    // TestRoutingModule,
+    // ContactRoutingModule,
+    // MailRoutingModule
   ],
   declarations: [
     HeaderComponent,

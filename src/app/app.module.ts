@@ -18,10 +18,7 @@ import { MailListComponent } from './mail/mail-list/mail-list.component';
 import { MailItemComponent } from './mail/mail-item/mail-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
-import { ContactModule } from './contact/contact.module';
 import { SharedModule } from './shared/shared.module';
-import { MailModule } from './mail/mail.module';
-import { TestModule } from './test/test.module';
 
 
 @NgModule({
@@ -37,10 +34,7 @@ import { TestModule } from './test/test.module';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ContactModule,
     SharedModule,
-    MailModule,
-    TestModule
   ],
   providers: [AuthenticatedGuard, AnonymousGuard, MailService, UserService],
   bootstrap: [AppComponent]
