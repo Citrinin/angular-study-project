@@ -1,15 +1,13 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { delay } from 'rxjs/operators/delay';
-import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
 
-  public authChanged: EventEmitter<void> = new EventEmitter();
-
-  constructor(private router: Router) { }
+  constructor() { }
 
   public get userName(): string {
     return localStorage.getItem('userName');
@@ -17,20 +15,16 @@ export class UserService {
 
   public login(userName: string): Observable<any> {
     const source = of(1).pipe(
-      delay(1000)
+      delay(1000),
+      tap(() => {
+        localStorage.setItem('userName', userName);
+      })
     );
-    source.subscribe(() => {
-      localStorage.setItem('userName', userName);
-      this.authChanged.emit();
-      this.router.navigate(['/mail']);
-    });
     return source;
   }
 
   public logout(): void {
     localStorage.removeItem('userName');
-    this.authChanged.emit();
-    this.router.navigate(['/']);
   }
 
 }

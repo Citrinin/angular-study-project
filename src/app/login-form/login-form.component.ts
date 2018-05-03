@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -15,7 +16,8 @@ export class LoginFormComponent implements OnInit {
 
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   public loginForm: FormGroup = new FormGroup({
@@ -27,12 +29,13 @@ export class LoginFormComponent implements OnInit {
   }
 
   public login() {
-    console.log(this.username, ' ', this.password);
     this.loading = true;
-    this.userService.login(this.loginForm.value.login).subscribe(() => this.loading = false);
-  }
-
-  public submit() {
-    console.log(this.loginForm.value.login);
+    this.userService.login(this.loginForm.value.login).subscribe(() => {
+      this.loading = false;
+      this.router.navigate(['/mail/list']);
+    },
+      () => {
+        this.loading = false;
+      });
   }
 }

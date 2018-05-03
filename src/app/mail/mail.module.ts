@@ -4,7 +4,6 @@ import { SharedModule } from '../shared/shared.module';
 import { MailComponent } from './mail.component';
 import { MailListComponent } from './mail-list/mail-list.component';
 import { MailItemComponent } from './mail-item/mail-item.component';
-import { AppRoutingModule } from '../app-routing.module';
 import { MailRoutingModule } from './mail-routing.module';
 
 @NgModule({

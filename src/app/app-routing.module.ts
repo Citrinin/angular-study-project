@@ -3,21 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthenticatedGuard } from './shared/guards/authenticated.guard';
 import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { MailModule } from './mail/mail.module';
-import { ContactModule } from './contact/contact.module';
-import { TestModule } from './test/test.module';
-
-
 
 const routes: Routes = [
   {
     path: 'mail',
-    loadChildren: () => MailModule,
+    loadChildren: 'app/mail/mail.module#MailModule',
     canActivate: [AuthenticatedGuard]
   },
   {
     path: 'contacts',
-    loadChildren: () => ContactModule,
+    loadChildren: 'app/contact/contact.module#ContactModule',
     canActivate: [AuthenticatedGuard],
   },
   {
@@ -32,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'test',
-    loadChildren: () => TestModule
+    loadChildren: 'app/test/test.module#TestModule',
   },
 ];
 

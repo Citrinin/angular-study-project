@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
   public isSignIn: boolean;
 
   ngOnInit() {
-    this.userService.authChanged.subscribe(_ => this.checkAuth());
     this.checkAuth();
   }
 
