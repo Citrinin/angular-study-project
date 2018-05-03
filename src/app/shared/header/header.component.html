@@ -8,7 +8,10 @@
             <div class="navbar-nav flex-nowrap">
                 <div *ngIf="isSignIn">
                     <label>{{userName}}</label>
-                    <button type="button" class="btn btn-link" (click)="signoutClick()" style="color:#fff">Log out</button>
+                    <button type="button" class="btn btn-link" (click)="signoutClick()" style="color:#fff" [disabled]="loading">
+                        <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
+                        Log out
+                    </button>
                 </div>
                 <a *ngIf="!isSignIn" class="nav-link" routerLink="login">Login</a>
             </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { isNull } from 'util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,11 @@ import { isNull } from 'util';
 })
 export class HeaderComponent implements OnInit {
 
+  loading = false;
+
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { }
 
   public userName: string;
@@ -21,7 +25,12 @@ export class HeaderComponent implements OnInit {
   }
 
   signoutClick() {
-    this.userService.logout();
+    this.loading = true;
+    this.userService.logout().subscribe(() => {
+      this.loading = false;
+      this.router.navigate(['login']);
+    },
+      () => this.loading = false);
   }
 
   private checkAuth(): void {

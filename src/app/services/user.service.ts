@@ -14,17 +14,21 @@ export class UserService {
   }
 
   public login(userName: string): Observable<any> {
-    const source = of(1).pipe(
+    return of(1).pipe(
       delay(1000),
       tap(() => {
         localStorage.setItem('userName', userName);
       })
     );
-    return source;
   }
 
-  public logout(): void {
-    localStorage.removeItem('userName');
+  public logout(): Observable<any> {
+    return of(1).pipe(
+      delay(1000),
+      tap(() => {
+        localStorage.removeItem('userName');
+      })
+    );
   }
 
 }
