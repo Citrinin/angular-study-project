@@ -14,6 +14,7 @@ export class LoginFormComponent implements OnInit {
   public username: string;
   public password: string;
   public loading = false;
+  public loginError = false;
 
 
   constructor(
@@ -44,7 +45,16 @@ export class LoginFormComponent implements OnInit {
       this.router.navigate(['/mail/list']);
       console.log('success');
     }, err => {
-      this.loading = false; 
-      console.log(err)});
+      this.loading = false;
+      this.loginError = true;
+      console.log(err)
+    });
+  }
+
+
+  public resetPassword() {
+    this.userService.resetPassword(this.loginForm.value.login).subscribe(() => {
+      console.log('message sent');
+    })
   }
 }

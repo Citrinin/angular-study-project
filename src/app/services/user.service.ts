@@ -38,4 +38,11 @@ export class UserService {
     return fromPromise(this.afAuth.auth.createUserWithEmailAndPassword(email, password))
   }
 
+  public resetPassword(email: string): Observable<any> {
+    return fromPromise(this.afAuth.auth.sendPasswordResetEmail(email));
+  }
+  public test(): void {
+    console.log(this.afAuth.auth.currentUser);
+  }
+
 }

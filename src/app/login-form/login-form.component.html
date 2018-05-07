@@ -13,6 +13,8 @@
         <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
         Sign in
     </button>
+    <div class="alert alert-danger forget-pass" *ngIf="loginError" (click)="resetPassword()">Wrong email or password.
+        <br> Forget password?</div>
     If you haven't account you can
     <a routerLink="/register">register</a>
 </form>
