@@ -34,16 +34,13 @@ export class LoginFormComponent implements OnInit {
 
   public login() {
     this.loading = true;
-    this.userService.login(this.loginForm.value.login).subscribe(() => {
+    this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.value.login, this.loginForm.value.password)
+    .then(()=>{
       this.loading = false;
       this.router.navigate(['/mail/list']);
-    },
-      () => {
-        this.loading = false;
-      });
-  }
-
-  public register() {
-    this.afAuth.auth.createUserWithEmailAndPassword('jaina-saintly@mail.ru', 'password').catch(err => console.log(err));
+      console.log('success');
+    }, err => {
+      this.loading = false; 
+      console.log(err)});
   }
 }

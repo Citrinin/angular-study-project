@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Subject ,  Observable ,  from as fromPromise } from 'rxjs';
 import { Mail } from '../@types/mail';
-import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 import { map, tap, switchMap } from 'rxjs/operators';
 
 declare var gapi: any;

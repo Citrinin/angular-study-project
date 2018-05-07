@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Component({
   selector: 'app-dropdown',

@@ -19,6 +19,7 @@ import localeRu from '@angular/common/locales/ru';
 import { AngularFireModule } from 'angularfire2';
 import { config } from './config/config';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { RegisterComponent } from './register/register.component';
 
 registerLocaleData(localeRu);
 
@@ -28,6 +29,7 @@ registerLocaleData(localeRu);
     AppComponent,
     MainComponent,
     LoginFormComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

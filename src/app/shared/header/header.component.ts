@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { isNull } from 'util';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { interval } from 'rxjs/observable/interval';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-header',

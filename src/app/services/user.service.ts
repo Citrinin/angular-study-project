@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { delay } from 'rxjs/operators/delay';
-import { tap } from 'rxjs/operators';
+import { Observable ,  of } from 'rxjs';
+import { delay ,  tap } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
