@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 
 
 @Component({
@@ -21,7 +19,6 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    public afAuth: AngularFireAuth
   ) { }
 
   public loginForm: FormGroup = new FormGroup({
@@ -33,9 +30,16 @@ export class LoginFormComponent implements OnInit {
   }
 
   public login() {
+    // this.loading = true;
+    // this.userService.login(this.loginForm.value.login).subscribe(() => {
+    //   this.loading = false;
+    //   this.router.navigate(['/mail/list']);
+    // },
+    //   () => {
+    //     this.loading = false;
+    //   });
     this.loading = true;
-    this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.value.login, this.loginForm.value.password)
-    .then(()=>{
+    this.userService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe(() => {
       this.loading = false;
       this.router.navigate(['/mail/list']);
       console.log('success');

@@ -3,14 +3,16 @@
     <label for="inputEmail" class="sr-only">Email address</label>
     <input formControlName="login" type="text" id="inputEmail" class="form-control" placeholder="login" name="username" required>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+    <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Password" name="password"
+        required>
     <div class="alert-danger" *ngIf="(loginForm.controls['password'].invalid && loginForm.controls['password'].touched)||
                 (loginForm.controls['login'].invalid && loginForm.controls['login'].touched)">
-        Некорректный логин или пароль
+        Incorrect login or password
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit" (click)=" login() " [disabled]="loginForm.invalid||loading">
         <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
         Sign in
     </button>
-    If you haven't account you can <a routerLink="/register">register</a> 
+    If you haven't account you can
+    <a routerLink="/register">register</a>
 </form>
