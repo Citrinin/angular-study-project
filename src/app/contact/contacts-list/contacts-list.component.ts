@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { MailService } from '../../services/mail.service';
 import { Contact } from '../../@types/contact';

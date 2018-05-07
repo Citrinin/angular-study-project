@@ -16,3 +16,14 @@
         {{this.loginForm.value.login}}|{{this.loginForm.value.password}}
     </p>
 </form>
+<form class="form-sign">
+
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="text" class="form-control" placeholder="login" name="username" required>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" class="form-control" placeholder="Password" name="password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)=" register() " [disabled]="loginForm.invalid||loading">
+            <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
+            Register
+        </button>
+</form>

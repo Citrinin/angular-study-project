@@ -8,6 +8,7 @@
             <div class="navbar-nav flex-nowrap">
                 <div *ngIf="isSignIn">
                     <label>{{userName}}</label>
+                    <label>{{date | date:'mediumTime':'':'ru'}}</label>
                     <button type="button" class="btn btn-link" (click)="signoutClick()" style="color:#fff" [disabled]="loading">
                         <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
                         Log out

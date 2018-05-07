@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+
 
 @Component({
   selector: 'app-login-form',
@@ -17,7 +20,8 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    public afAuth: AngularFireAuth
   ) { }
 
   public loginForm: FormGroup = new FormGroup({
@@ -37,5 +41,9 @@ export class LoginFormComponent implements OnInit {
       () => {
         this.loading = false;
       });
+  }
+
+  public register() {
+    this.afAuth.auth.createUserWithEmailAndPassword('jaina-saintly@mail.ru', 'password').catch(err => console.log(err));
   }
 }

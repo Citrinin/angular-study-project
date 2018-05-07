@@ -13,6 +13,14 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { SharedModule } from './shared/shared.module';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+
+import { AngularFireModule } from 'angularfire2';
+import { config } from './config/config';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+registerLocaleData(localeRu);
 
 
 @NgModule({
@@ -29,6 +37,8 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
+    AngularFireModule.initializeApp(config.firebase),
+    AngularFireAuthModule
   ],
   providers: [
     AuthenticatedGuard,
