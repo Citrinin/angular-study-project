@@ -1,9 +1,16 @@
 <div>
     <div class="content">
-        <p *ngFor="let mail of mails" class="mail-item m-1">
-            <a routerLink="/mail/item/{{mail.id}}">
-                <b>{{mail.email}}</b> {{mail.name}}
+        <div *ngFor="let mail of mails | async" class="mail-item">
+            <a routerLink="/mail/item/{{mail.key}}">
+                <div class="d-flex">
+                    <div class="mail-sender">{{this.page==='sent'? mail.emailTo : mail.emailFrom}} </div>
+                    <div class="flex-grow-1">{{mail.subject}}
+                        <span class="message">{{mail.message}}</span>
+                    </div>
+                    <div>{{mail.date | dateFromMs |date:'d MMM'}}</div>
+                </div>
             </a>
-        </p>
+            <hr class="mail">
+        </div>
     </div>
 </div>

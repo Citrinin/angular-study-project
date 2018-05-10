@@ -1,0 +1,21 @@
+<h1>New message</h1>
+<hr>
+<form class="example-form mail" [formGroup]="mailForm">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="To" type="email" formControlName="email" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="mailForm.controls.email.hasError('email') && !mailForm.controls.email.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="mailForm.controls.email.hasError('required')">
+      Email is
+      <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Subject" formControlName="subject">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <textarea matInput class="mail-body" placeholder="Message" formControlName="message"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" [disabled]="mailForm.invalid" (click)="sendMessage()">Send message</button>
+</form>

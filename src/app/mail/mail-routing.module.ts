@@ -4,18 +4,30 @@ import { RouterModule, Routes } from '@angular/router';
 import { MailListComponent } from './mail-list/mail-list.component';
 import { MailItemComponent } from './mail-item/mail-item.component';
 import { MailComponent } from './mail.component';
+import { NewMailComponent } from './new-mail/new-mail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MailComponent,
-    children: [{
-      path: 'list',
-      component: MailListComponent
-    }, {
-      path: 'item/:id',
-      component: MailItemComponent
-    }]
+    children: [
+      {
+        path: 'inbox',
+        component: MailListComponent
+      },
+      {
+        path: 'sent',
+        component: MailListComponent
+      },
+      {
+        path: 'item/:id',
+        component: MailItemComponent
+      },
+      {
+        path: 'new',
+        component: NewMailComponent
+      }
+    ]
   }
 ];
 

@@ -1,13 +1,18 @@
 <div class="mail">
     <b>
-      {{mail?.name}}
+        {{(mail | async)?.subject}}
+
     </b>
     <hr>
     <p>
-        from {{mail?.email}}
+        <span class="muted">from</span> {{(mail | async)?.emailFrom}}
     </p>
     <hr>
     <p>
-        {{mail?.body}}
+        <span class="muted">to</span> {{(mail | async)?.emailTo}}
+    </p>
+    <hr>
+    <p>
+        {{(mail | async)?.message}}
     </p>
 </div>

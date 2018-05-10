@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject ,  Observable ,  from as fromPromise } from 'rxjs';
+import { Subject, Observable, from as fromPromise } from 'rxjs';
 import { Mail } from '../@types/mail';
 import { map, tap, switchMap } from 'rxjs/operators';
 
@@ -80,7 +80,7 @@ export class GoogleService {
     return gapi.auth2.getAuthInstance().signIn().then(
       response => {
         this.user = response.w3.ig;
-        this.router.navigate(['/mail']);
+        this.router.navigate(['/mail/inbox']);
         return this.user;
       }
     );
@@ -129,7 +129,7 @@ export class GoogleService {
   //   return Promise.resolve().then(
   //     response => {
   //       this.user = 'Katherine';
-  //       this.router.navigate(['/mail']);
+  //       this.router.navigate(['/mail/inbox']);
   //       return this.user;
   //     }
   //   );

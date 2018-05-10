@@ -31,18 +31,10 @@ export class LoginFormComponent implements OnInit {
   }
 
   public login() {
-    // this.loading = true;
-    // this.userService.login(this.loginForm.value.login).subscribe(() => {
-    //   this.loading = false;
-    //   this.router.navigate(['/mail/list']);
-    // },
-    //   () => {
-    //     this.loading = false;
-    //   });
     this.loading = true;
     this.userService.login(this.loginForm.value.login, this.loginForm.value.password).subscribe(() => {
       this.loading = false;
-      this.router.navigate(['/mail/list']);
+      this.router.navigate(['/mail/inbox']);
       console.log('success');
     }, err => {
       this.loading = false;

@@ -1,26 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from, zip } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-import { fromPromise } from 'rxjs/internal-compatibility';
+import { MailService } from './mail.service';
+import { AuthService } from './auth.service';
 
 
 @Injectable()
 export class UserService {
 
-  constructor(public afAuth: AngularFireAuth) { }
+  constructor(
+    private afAuth: AngularFireAuth,
+    private mailService: MailService,
+    private authService: AuthService
+  ) { }
 
-  public get userName(): string {
-    return localStorage.getItem('email');
-  }
+
 
   public login(email: string, password: string): Observable<any> {
-    return fromPromise(this.afAuth.auth.signInWithEmailAndPassword(email, password))
+    return from(this.afAuth.auth.signInWithEmailAndPassword(email, password))
       .pipe(
         delay(1000),
         tap(() => {
-          localStorage.setItem('email', email);
+          this.authService.setUser(email);
         })
       );
   }
@@ -29,20 +32,20 @@ export class UserService {
     return of(1).pipe(
       delay(1000),
       tap(() => {
-        localStorage.removeItem('email');
+        this.authService.removeUser();
       })
     );
   }
 
   public register(email: string, password: string): Observable<any> {
-    return fromPromise(this.afAuth.auth.createUserWithEmailAndPassword(email, password))
+    return zip(
+      from(this.afAuth.auth.createUserWithEmailAndPassword(email, password)),
+      this.mailService.addUser(email)
+    );
   }
 
   public resetPassword(email: string): Observable<any> {
-    return fromPromise(this.afAuth.auth.sendPasswordResetEmail(email));
-  }
-  public test(): void {
-    console.log(this.afAuth.auth.currentUser);
+    return from(this.afAuth.auth.sendPasswordResetEmail(email));
   }
 
 }

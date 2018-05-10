@@ -1,0 +1,15 @@
+.example-form {
+    width: 100%;
+}
+  
+.example-full-width {
+  width: 100%;
+}
+
+.mail{
+    background-color: rgba(255, 255, 255, 0.527); 
+}
+
+.mail-body{
+  height: 50vh;
+}

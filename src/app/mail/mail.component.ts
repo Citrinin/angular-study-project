@@ -9,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class MailComponent implements OnInit {
 
   public mailMenu = [
-    { name: 'Inbox', link: '/mail/list' },
-    { name: 'Sent Mail', link: '/mail' },
-    { name: 'Draft', link: '/mail' },
+    { name: 'New Mail', link: '/mail/new' },
+    { name: 'Inbox', link: '/mail/inbox' },
+    { name: 'Sent Mail', link: '/mail/sent' },
   ];
 
   constructor(

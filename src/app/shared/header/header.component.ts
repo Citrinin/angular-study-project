@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
 import { isNull } from 'util';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   date: Date;
 
   constructor(
+    private authService: AuthService,
     private userService: UserService,
     private router: Router
   ) { }
@@ -40,7 +42,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private checkAuth(): void {
-    this.userName = this.userService.userName;
+    this.userName = this.authService.userName;
     this.isSignIn = !isNull(this.userName);
   }
 }

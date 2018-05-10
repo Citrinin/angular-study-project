@@ -13,7 +13,7 @@ export class DropdownComponent implements OnInit {
   mainMenuItems = [
     {
       name: 'Mail',
-      link: '/mail/list'
+      link: '/mail/inbox'
     },
     {
       name: 'Contacts',
