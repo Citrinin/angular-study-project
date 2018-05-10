@@ -1,9 +1,33 @@
+<div class="toolbar">
+    <div class="d-flex justify-content-between">
+        <div>
+            <!-- <span class="px-3">
+                <button mat-raised-button color="primary">
+                    <i class="fas fa-reply-all"></i>
+                    Back
+                </button>
+            </span> -->
+        </div>
+        <div>
+            <span class="px-2">
+                <button mat-raised-button color="primary" (click)="prevPage()">
+                    <i class="fas fa-angle-left"></i>
+                </button>
+            </span>
+            <span>
+                <button mat-raised-button color="primary" (click)="nextPage()">
+                    <i class="fas fa-angle-right"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
 <div>
     <div class="content">
         <div *ngFor="let mail of mails | async" class="mail-item">
-            <a routerLink="/mail/item/{{mail.key}}">
+            <a routerLink="/mail/item/{{page}}/{{mail.key}}" [class.new-mail]="page==='inbox' && mail.isNew">
                 <div class="d-flex">
-                    <div class="mail-sender">{{this.page==='sent'? mail.emailTo : mail.emailFrom}} </div>
+                    <div class="mail-sender">{{page==='sent'? mail.emailTo : mail.emailFrom}} </div>
                     <div class="flex-grow-1">{{mail.subject}}
                         <span class="message">{{mail.message}}</span>
                     </div>
@@ -11,6 +35,9 @@
                 </div>
             </a>
             <hr class="mail">
+        </div>
+        <div *ngIf="(mails | async)?.length === 0">
+            No messages!
         </div>
     </div>
 </div>

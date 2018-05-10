@@ -1,8 +1,9 @@
-<div class="dropdown">
-    <button #toggleButton class="btn btn-secondary dropdown-toggle" (click)="toggle()">{{activeItem}}</button>
-
-
-    <div *ngIf="visible" class="dropdown-list">
-        <a class="dropdown-item" *ngFor="let item of mainMenuItems " [routerLink]="item.link" (click)="clickHandler(item) ">{{item.name}}</a>
-    </div>
+<div class="dropdown px-2">
+    <mat-form-field>
+        <mat-select placeholder=" Menu" [(value)]="activeItem" (selectionChange)="selectionChanged($event)">
+            <mat-option *ngFor="let item of mainMenuItems" [value]="item.link">
+                {{ item.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>

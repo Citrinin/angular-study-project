@@ -12,6 +12,7 @@ import { Mail } from '../../@types/mail';
 export class MailItemComponent implements OnInit {
 
   public mail: any;
+  public page: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,11 +21,12 @@ export class MailItemComponent implements OnInit {
 
   ngOnInit() {
     const key = this.route.snapshot.paramMap.get('id');
+    this.page = this.route.snapshot.paramMap.get('page')
     this.getMail(key);
   }
 
   getMail(key: string) {
-    this.mail = this.mailService.getMail(key);
+    this.mail = this.mailService.getMail(key, this.page === 'inbox');
   }
 
 }

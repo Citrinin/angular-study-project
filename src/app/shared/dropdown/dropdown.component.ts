@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dropdown',
@@ -13,7 +14,7 @@ export class DropdownComponent implements OnInit {
   mainMenuItems = [
     {
       name: 'Mail',
-      link: '/mail/inbox'
+      link: '/mail'
     },
     {
       name: 'Contacts',
@@ -25,21 +26,16 @@ export class DropdownComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
-  }
-
-  toggle(): void {
-    this.visible = !this.visible;
-  }
-
-  clickHandler(item): void {
-
-    this.activeItem = item.name;
-    this.toggle();
+    this.activeItem = '/' + this.router.url.split('/')[1];
   }
 
 
-
+  selectionChanged(event) {
+    this.router.navigate([event.value]);
+  }
 }

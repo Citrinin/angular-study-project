@@ -20,12 +20,16 @@ const routes: Routes = [
         component: MailListComponent
       },
       {
-        path: 'item/:id',
+        path: 'item/:page/:id',
         component: MailItemComponent
       },
       {
         path: 'new',
         component: NewMailComponent
+      }, {
+        path: '',
+        redirectTo: 'inbox',
+        pathMatch: 'full'
       }
     ]
   }

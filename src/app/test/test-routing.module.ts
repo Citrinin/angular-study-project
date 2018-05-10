@@ -14,6 +14,10 @@ const routes: Routes = [
     }, {
       path: 'structural',
       component: TestStructuralDirectiveComponent
+    }, {
+      path: '',
+      redirectTo: 'directive',
+      pathMatch: 'full'
     }]
   }
 ];

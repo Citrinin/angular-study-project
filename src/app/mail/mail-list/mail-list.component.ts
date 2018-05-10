@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MailService } from '../../services/mail.service';
 import { Mail } from '../../@types/mail';
 import { tap } from 'rxjs/operators';
@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-mail-list',
   templateUrl: './mail-list.component.html',
-  styleUrls: ['./mail-list.component.css']
+  styleUrls: ['./mail-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class MailListComponent implements OnInit {
 
@@ -24,18 +26,14 @@ export class MailListComponent implements OnInit {
   ngOnInit() {
     this.page = this.route.snapshot.routeConfig.path;
     if (this.page === 'sent') {
-      this.mails = this.mailService.getSentMails();
+      this.mails = this.mailService.getMails('sent');
     } else {
-      this.mails = this.mailService.getInboxMails();
+      this.mails = this.mailService.getMails('inbox');
     }
-    // this.getMail();
   }
 
-  // getMail(): void {
-  //   this.mailService.getMails()
-  //     .pipe(
-  //       tap(mails => this.mails = mails)
-  //     ).subscribe();
+  // public nextPage() {
+  //   this.mails = this.mailService.getInboxMailsNextPage();
   // }
 
 }

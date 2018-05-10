@@ -9,11 +9,13 @@ import { TestRoutingModule } from '../test/test-routing.module';
 import { ContactRoutingModule } from '../contact/contact-routing.module';
 import { MailRoutingModule } from '../mail/mail-routing.module';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MaterialModule
   ],
   declarations: [
     HeaderComponent,

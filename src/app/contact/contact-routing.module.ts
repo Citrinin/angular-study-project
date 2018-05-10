@@ -14,6 +14,10 @@ const routes: Routes = [
     }, {
       path: 'add',
       component: AddContactComponent
+    }, {
+      path: '',
+      redirectTo: 'list',
+      pathMatch: 'full'
     }]
   }
 ];

@@ -27,3 +27,12 @@ a {
 .mail-sender{
     width: 200px;
 }
+
+.new-mail{
+    font-weight: bold;
+}
+
+.toolbar{
+    padding-bottom: 25px;
+    margin-top: -70px; 
+}
