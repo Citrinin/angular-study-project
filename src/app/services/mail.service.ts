@@ -42,10 +42,7 @@ export class MailService {
   }
 
   public chechEmailIsExist(email: string): any {
-    return this.afs.doc(`users/${email}`).valueChanges()
-      .pipe(
-        tap(data => console.log(data))
-      )
+    return this.afs.doc(`users/${email}`).valueChanges();
   }
 
   public sendMessage(emailTo: string, subject: string, message: string): Observable<any> {
@@ -160,5 +157,9 @@ export class MailService {
 
   public test() {
     return this.afs.collection(`/messages/`, ref => ref.limit(1)).valueChanges();
+  }
+
+  public goBack() {
+
   }
 }

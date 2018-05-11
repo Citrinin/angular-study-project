@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MailService } from '../../services/mail.service';
 import { Mail } from '../../@types/mail';
 
@@ -16,7 +16,8 @@ export class MailItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private mailService: MailService
+    private mailService: MailService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,6 +28,10 @@ export class MailItemComponent implements OnInit {
 
   getMail(key: string) {
     this.mail = this.mailService.getMail(key, this.page === 'inbox');
+  }
+
+  goBack() {
+    this.router.navigate([`/mail/${this.page}`])
   }
 
 }

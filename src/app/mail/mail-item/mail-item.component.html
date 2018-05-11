@@ -1,3 +1,18 @@
+<div class="toolbar">
+    <div class="d-flex justify-content-between">
+        <div>
+            <span class="px-3">
+                <button mat-raised-button color="primary" (click)="goBack()">
+                    <i class="fas fa-reply-all"></i>
+                    Back
+                </button>
+            </span>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
 <div class="mail">
     <b>
         {{(mail | async)?.subject}}
