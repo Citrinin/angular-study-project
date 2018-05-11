@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { MailService } from '../services/mail.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -15,11 +17,13 @@ export class LoginFormComponent implements OnInit {
   public password: string;
   public loading = false;
   public loginError = false;
+  public testResponse;
 
 
   constructor(
     private userService: UserService,
     private router: Router,
+    private mailService: MailService
   ) { }
 
   public loginForm: FormGroup = new FormGroup({
@@ -48,5 +52,9 @@ export class LoginFormComponent implements OnInit {
     this.userService.resetPassword(this.loginForm.value.login).subscribe(() => {
       console.log('message sent');
     })
+  }
+
+  public securityTest() {
+    this.mailService.test().subscribe(result => this.testResponse = result, error => console.error(error));
   }
 }

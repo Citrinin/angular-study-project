@@ -1,20 +1,27 @@
-<form class="form-sign" [formGroup]="loginForm">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input formControlName="login" type="text" id="inputEmail" class="form-control" placeholder="login" name="username" required>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Password" name="password"
-        required>
-    <div class="alert-danger" *ngIf="(loginForm.controls['password'].invalid && loginForm.controls['password'].touched)||
-                (loginForm.controls['login'].invalid && loginForm.controls['login'].touched)">
-        Incorrect login or password
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" (click)=" login() " [disabled]="loginForm.invalid||loading">
-        <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
-        Sign in
-    </button>
-    <div class="alert alert-danger forget-pass" *ngIf="loginError" (click)="resetPassword()">Wrong email or password.
-        <br> Forget password?</div>
-    If you haven't account you can
-    <a routerLink="/register">register</a>
-</form>
+<div class="d-flex cont">
+    <form class="form-sign" [formGroup]="loginForm">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input formControlName="login" type="text" id="inputEmail" class="form-control" placeholder="login" name="username" required>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Password" name="password"
+            required>
+        <div class="alert-danger" *ngIf="(loginForm.controls['password'].invalid && loginForm.controls['password'].touched)||
+                    (loginForm.controls['login'].invalid && loginForm.controls['login'].touched)">
+            Incorrect login or password
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)=" login() " [disabled]="loginForm.invalid||loading">
+            <i *ngIf="loading" class="fa fa-spinner fa-pulse"></i>
+            Sign in
+        </button>
+        <div class="alert alert-danger forget-pass" *ngIf="loginError" (click)="resetPassword()">Wrong email or password.
+            <br> Forget password?</div>
+        If you haven't account you can
+        <a routerLink="/register">register</a>
+
+        <button class="btn btn-lg btn-primary btn-block" (click)=" securityTest() ">
+            Security test
+        </button>
+        <div *ngFor="let item of testResponse">{{item.message}}</div>
+    </form>
+</div>

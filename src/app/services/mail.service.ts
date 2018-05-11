@@ -4,11 +4,10 @@ import { Observable, from } from 'rxjs';
 import { Mail } from '../@types/mail';
 import { Contact } from '../@types/contact';
 import { config } from '../config/config';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from './user.service';
 import { AuthService } from './auth.service';
 import { map, tap } from 'rxjs/operators';
-
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,14 +19,16 @@ const httpOptions = {
 export class MailService {
 
   private category: string;
-  private startWithKey: string;
-  private endAtKey: string;
+  private lastVisible;
+  private firstVisible;
+  private firstMessage;
 
   constructor(
     private http: HttpClient,
-    private db: AngularFireDatabase,
-    private authService: AuthService
+    private authService: AuthService,
+    private afs: AngularFirestore
   ) {
+    afs.firestore.settings({ timestampsInSnapshots: true });
   }
 
 
@@ -37,90 +38,127 @@ export class MailService {
 
 
   public addUser(email: string): Observable<any> {
-    return from(this.db.list('users').push({ email }));
+    return from(this.afs.doc(`users/${email}`).set({}));
+  }
+
+  public chechEmailIsExist(email: string): any {
+    return this.afs.doc(`users/${email}`).valueChanges()
+      .pipe(
+        tap(data => console.log(data))
+      )
   }
 
   public sendMessage(emailTo: string, subject: string, message: string): Observable<any> {
     let emailFrom = this.authService.userName;
     let timeStamp = (new Date()).getTime();
-    return from(this.db.list('messages')
-      .push({
+    return from(this.afs.collection('messages')
+      .add({
         emailFrom: emailFrom,
         date: timeStamp,
         emailTo,
         subject,
         message,
-        isNew: true,
-        emailFromKey: `${emailFrom}_${timeStamp}`,
-        emailToKey: `${emailTo}_${timeStamp}`,
+        isNew: true
       }));
   }
 
-  // public getSentMails(): Observable<any[]> {
-  //   return this.db.list('/messages', ref => ref.orderByChild('emailFrom').equalTo(this.authService.userName).limitToLast(10))
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map(items => items.map(item => ({ key: item.key, ...item.payload.val() }))),
-  //       map(items => items.reverse())
-  //     )
-  // }
-
-  public getMails(category: string): Observable<any[]> {
-
-    return this.db.list('/messages', ref => ref
-      .orderByChild(`email${category === 'sent' ? 'From' : 'To'}Key`)
-      .endAt(this.endAtKey)
-      .startAt(this.startWithKey)
-      .limitToLast(11)
-    )
+  public getMails(category: string, amount: number): Observable<any> {
+    if (this.category !== category) {
+      this.category = category;
+      this.lastVisible = null;
+      this.firstMessage = null;
+    }
+    return this.afs.collection('/messages', ref => ref
+      .where(`email${category === 'sent' ? 'From' : 'To'}`, '==', this.authService.userName)
+      .orderBy('date', 'desc')
+      .limit(amount))
       .snapshotChanges()
       .pipe(
-        map(items => items.map(item => ({ key: item.key, ...item.payload.val() }))),
         tap(items => {
-          this.endAtKey = `${this.authService.userName}_${category}_${items.length !== 0 ? items[0].date : ''}`;
-          //  this.startWithKey = `${this.authService.userName}_${category}_${items.length !== 0 ? items[items.length - 1].date : ''}`;
+          this.lastVisible = items.length < amount ? null : items[items.length - 1].payload.doc;
+          this.firstMessage = items[0].payload.doc;
         }),
         map(items => {
-          if (items.length >= 11) {
-            items.splice(0, 1);
-          }
-          return items.reverse();
-        })
-      );
+          return {
+            mails: items.map(item => {
+              const data = item.payload.doc.data();
+              const key = item.payload.doc.id;
+              return { key, ...data }
+            }), isPrevPage: false, isNextPage: items.length === amount
+          };
+        }),
+    );
   }
 
-  // getInboxMailsNextPage(): Observable<any[]> {
-  //   return this.db.list('/messages', ref => ref.orderByChild('syntheticInboxkey').endAt(this.lastKey).limitToLast(11))
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map(items => items.map(item => ({ key: item.key, ...item.payload.val() }))),
-  //       tap(items => this.lastKey = items[0].key),
-  //       map(items => {
-  //         items.splice(0, 1);
-  //         return items.reverse();
-  //       })
-  //     );
-  // }
+  getMailsNextPage(category: string, amount: number): Observable<any> | null {
+    if (this.lastVisible) {
 
-  // getInboxMailsPrevPage(): Observable<any[]> {
-  //   return this.db.list('/messages', ref => ref.orderByChild('syntheticInboxkey').endAt(this.lastKey).limitToLast(10))
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map(items => items.map(item => ({ key: item.key, ...item.payload.val() }))),
-  //       tap(items => this.lastKey = items[0].key),
-  //       map(items => items.reverse())
-  //     );
-  // }
+      return this.afs.collection('/messages', ref => ref
+        .where(`email${category === 'sent' ? 'From' : 'To'}`, '==', this.authService.userName)
+        .orderBy('date', 'desc')
+        .startAfter(this.lastVisible)
+        .limit(10))
+        .snapshotChanges()
+        .pipe(
+          tap(items => {
+            this.lastVisible = items.length < amount ? null : items[items.length - 1].payload.doc;
+            this.firstVisible = items[0].payload.doc;
+          }),
+          map(items => {
+            return {
+              mails: items.map(item => {
+                const data = item.payload.doc.data();
+                const key = item.payload.doc.id;
+                return { key, ...data }
+              }), isPrevPage: this.firstMessage.id !== this.firstVisible.id, isNextPage: items.length === amount
+            };
+          }),
+      );
+    }
+    return null;
+  }
+
+
+  public getMailsPrevPage(category: string, amount: number) {
+    if (this.firstVisible) {
+      return this.afs.collection('/messages', ref => ref
+        .where(`email${category === 'sent' ? 'From' : 'To'}`, '==', this.authService.userName)
+        .orderBy('date', 'desc')
+        .endBefore(this.firstVisible)
+        .limit(amount))
+        .snapshotChanges()
+        .pipe(
+          tap(items => {
+            this.lastVisible = items.length < 10 ? null : items[items.length - 1].payload.doc;
+            this.firstVisible = items[0].payload.doc;
+          }),
+          map(items => {
+            return {
+              mails: items.map(item => {
+                const data = item.payload.doc.data();
+                const key = item.payload.doc.id;
+                return { key, ...data }
+              }), isPrevPage: this.firstMessage.id !== this.firstVisible.id, isNextPage: items.length === amount
+            };
+          }),
+      );
+    }
+    return;
+  }
 
   public getMail(key: string, isNewFlag: boolean): Observable<any> {
-    let mail$ = this.db.object(`/messages/${key}`).valueChanges();
+    let mail$ = this.afs.doc(`/messages/${key}`).valueChanges();
     if (isNewFlag) {
       mail$.subscribe((mail: any) => {
         if (mail.isNew) {
-          this.db.object(`/messages/${key}`).set({ ...mail, isNew: false });
+          this.afs.doc(`/messages/${key}`).update({ ...mail, isNew: false });
         }
       });
     }
     return mail$;
+  }
+
+  public test() {
+    return this.afs.collection(`/messages/`, ref => ref.limit(1)).valueChanges();
   }
 }

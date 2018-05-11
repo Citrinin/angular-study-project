@@ -9,20 +9,20 @@ import { AnonymousGuard } from './shared/guards/anonymous.guard';
 import { MailService } from './services/mail.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
 import { SharedModule } from './shared/shared.module';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 
-import { AngularFireModule } from 'angularfire2';
 import { config } from './config/config';
+import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { RegisterComponent } from './register/register.component';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AuthService } from './services/auth.service';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 registerLocaleData(localeRu);
 
@@ -44,14 +44,15 @@ registerLocaleData(localeRu);
     SharedModule,
     AngularFireModule.initializeApp(config.firebase),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFirestoreModule
   ],
   providers: [
     AuthenticatedGuard,
     AnonymousGuard,
     UserService,
     MailService,
-    AuthService],
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

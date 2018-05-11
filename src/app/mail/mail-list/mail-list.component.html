@@ -9,13 +9,28 @@
             </span> -->
         </div>
         <div>
-            <span class="px-2">
-                <button mat-raised-button color="primary" (click)="prevPage()">
+            <span>
+                <button mat-raised-button color="primary" (click)="prevPage()" [disabled]="!((mails | async)?.isPrevPage)">
                     <i class="fas fa-angle-left"></i>
                 </button>
             </span>
+            <span class="px-2">
+                <mat-form-field style="width:50px;">
+                    <mat-select [(value)]="itemsPerPage" (selectionChange)="amountOfItemsChanged($event)">
+                        <mat-option [value]="10">
+                            10
+                        </mat-option>
+                        <mat-option [value]="30">
+                            30
+                        </mat-option>
+                        <mat-option [value]="50">
+                            50
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </span>
             <span>
-                <button mat-raised-button color="primary" (click)="nextPage()">
+                <button mat-raised-button color="primary" (click)="nextPage()" [disabled]="!((mails | async)?.isNextPage)">
                     <i class="fas fa-angle-right"></i>
                 </button>
             </span>
@@ -24,7 +39,7 @@
 </div>
 <div>
     <div class="content">
-        <div *ngFor="let mail of mails | async" class="mail-item">
+        <div *ngFor="let mail of (mails | async)?.mails" class="mail-item">
             <a routerLink="/mail/item/{{page}}/{{mail.key}}" [class.new-mail]="page==='inbox' && mail.isNew">
                 <div class="d-flex">
                     <div class="mail-sender">{{page==='sent'? mail.emailTo : mail.emailFrom}} </div>

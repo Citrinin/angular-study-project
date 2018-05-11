@@ -36,3 +36,7 @@
 .forget-pass{
     cursor: pointer;
 }
+
+.cont{
+    height: 100vh;
+}

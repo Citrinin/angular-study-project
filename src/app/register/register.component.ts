@@ -34,10 +34,10 @@ export class RegisterComponent implements OnInit {
   public register() {
     this.userService.register(this.registerForm.value.login, this.registerForm.value.password)
       .subscribe(() => {
+        console.log(123);
         this.router.navigate(['/login'])
       },
         error => console.error(error));
   }
-
 
 }
