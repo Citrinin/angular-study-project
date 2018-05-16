@@ -1,7 +1,9 @@
 export interface Mail {
-    postId: number;
-    id: number;
-    name: string;
-    email: string;
-    body: string;
+    key: string;
+    emailTo: string;
+    emailFrom: string;
+    subject: string;
+    message: string;
+    date: number;
+    isNew: boolean;
 }

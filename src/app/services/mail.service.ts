@@ -8,6 +8,8 @@ import { UserService } from './user.service';
 import { AuthService } from './auth.service';
 import { map, tap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { MailsList } from '../@types/mails-list';
+import { MailListComponent } from '../mail/mail-list/mail-list.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -59,12 +61,8 @@ export class MailService {
       }));
   }
 
-  public getMails(category: string, amount: number): Observable<any> {
-    if (this.category !== category) {
-      this.category = category;
-      this.lastVisible = null;
-      this.firstMessage = null;
-    }
+  public getMails(category: string, amount: number): Observable<MailsList> {
+    this.category = category;
     return this.afs.collection('/messages', ref => ref
       .where(`email${category === 'sent' ? 'From' : 'To'}`, '==', this.authService.userName)
       .orderBy('date', 'desc')
@@ -75,19 +73,19 @@ export class MailService {
           this.lastVisible = items.length < amount ? null : items[items.length - 1].payload.doc;
           this.firstMessage = items[0].payload.doc;
         }),
-        map(items => {
+        map((items): MailsList => {
           return {
             mails: items.map(item => {
               const data = item.payload.doc.data();
               const key = item.payload.doc.id;
               return { key, ...data }
             }), isPrevPage: false, isNextPage: items.length === amount
-          };
+          } as MailsList;
         }),
     );
   }
 
-  getMailsNextPage(category: string, amount: number): Observable<any> | null {
+  getMailsNextPage(category: string, amount: number): Observable<MailsList> | null {
     if (this.lastVisible) {
 
       return this.afs.collection('/messages', ref => ref
@@ -108,7 +106,7 @@ export class MailService {
                 const key = item.payload.doc.id;
                 return { key, ...data }
               }), isPrevPage: this.firstMessage.id !== this.firstVisible.id, isNextPage: items.length === amount
-            };
+            } as MailsList;
           }),
       );
     }
@@ -116,9 +114,9 @@ export class MailService {
   }
 
 
-  public getMailsPrevPage(category: string, amount: number) {
+  public getMailsPrevPage(category: string, amount: number): Observable<MailsList> | null {
     if (this.firstVisible) {
-      return this.afs.collection('/messages', ref => ref
+      return this.afs.collection<Mail>('/messages', ref => ref
         .where(`email${category === 'sent' ? 'From' : 'To'}`, '==', this.authService.userName)
         .orderBy('date', 'desc')
         .endBefore(this.firstVisible)
@@ -129,24 +127,24 @@ export class MailService {
             this.lastVisible = items.length < 10 ? null : items[items.length - 1].payload.doc;
             this.firstVisible = items[0].payload.doc;
           }),
-          map(items => {
+          map((items): MailsList => {
             return {
               mails: items.map(item => {
                 const data = item.payload.doc.data();
                 const key = item.payload.doc.id;
                 return { key, ...data }
               }), isPrevPage: this.firstMessage.id !== this.firstVisible.id, isNextPage: items.length === amount
-            };
+            } as MailsList;
           }),
       );
     }
-    return;
+    return null;
   }
 
-  public getMail(key: string, isNewFlag: boolean): Observable<any> {
-    let mail$ = this.afs.doc(`/messages/${key}`).valueChanges();
+  public getMail(key: string, isNewFlag: boolean): Observable<Mail> {
+    let mail$ = this.afs.doc<Mail>(`/messages/${key}`).valueChanges();
     if (isNewFlag) {
-      mail$.subscribe((mail: any) => {
+      mail$.subscribe((mail: Mail) => {
         if (mail.isNew) {
           this.afs.doc(`/messages/${key}`).update({ ...mail, isNew: false });
         }
@@ -159,7 +157,4 @@ export class MailService {
     return this.afs.collection(`/messages/`, ref => ref.limit(1)).valueChanges();
   }
 
-  public goBack() {
-
-  }
 }
